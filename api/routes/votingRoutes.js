@@ -13,4 +13,7 @@ module.exports = function(app) {
     .post(voter.cast_a_vote)
     .put(voter.update_a_game)
     .delete(voter.delete_a_game);
+
+  app.route('/games/:gameId/:userId')
+    .post(voter.add_user_to_game);
 };
