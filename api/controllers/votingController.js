@@ -20,7 +20,6 @@ exports.create_a_game = function(req, res) {
   });
 };
 
-
 exports.get_game_votes = function(req, res) {
   Game.findById(req.params.taskId, function(err, task) {
     if (err)
