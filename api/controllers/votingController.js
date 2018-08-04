@@ -63,11 +63,8 @@ exports.cast_a_vote = function(req, res) {
 exports.delete_a_vote = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
       if (err) res.send(err);
-      console.log(req.body);
       function IsTheVote(vote) {
-          var match = !((vote.user == req.body.user) && (vote.restaurant == req.body.restaurant) && (vote.voteUp == !!req.body.voteUp)); 
-          console.log(match);
-          return match;
+          return !((vote.user == req.body.user) && (vote.restaurant == req.body.restaurant) && (vote.voteUp == !!req.body.voteUp)); 
       }
       trains.votes = trains.votes.filter(IsTheVote);
       trains.save();
@@ -77,34 +74,44 @@ exports.delete_a_vote = function(req, res) {
 
 //methods for /games/:gameId/:userId route
 exports.add_user_to_game = function(req, res) {
-    Games.findOneAndUpdate({_id: req.params.gameId}, req.body, {new: true}, function(err, trains) {
-      if (err)
-        res.send(err);
-      res.json(trains);
-    });
+    Games.findById({_id: req.params.gameId}, function(err, trains) {
+        if (err) res.send(err);
+        trains.users = trains.users.push(req.params.userId);
+        trains.save();
+        res.json(trains);
+      });
   };
 
-  exports.remove_user_from_game = function(req, res) {
-    Games.findOneAndUpdate({_id: req.params.gameId}, req.body, {new: true}, function(err, trains) {
-      if (err)
-        res.send(err);
-      res.json(trains);
+exports.remove_user_from_game = function(req, res) {
+    Games.findById({_id: req.params.gameId}, function(err, trains) {
+        if (err) res.send(err);
+        function ValidUser(user) {
+            return !(user == req.params.userId);
+        }
+        trains.users = trains.users.filter(ValidUser);
+        trains.save();
+        res.json(trains);
     });
-  };
+};
 
   //methods for /games/:gameId/:restId route
 exports.add_rest_to_game = function(req, res) {
-    Games.findOneAndUpdate({_id: req.params.gameId}, req.body, {new: true}, function(err, trains) {
-      if (err)
-        res.send(err);
-      res.json(trains);
-    });
+    Games.findById({_id: req.params.gameId}, function(err, trains) {
+        if (err) res.send(err);
+        trains.restaurants = trains.restaurants.push(req.params.restId);
+        trains.save();
+        res.json(trains);
+      });
   };
 
   exports.remove_rest_from_game = function(req, res) {
-    Games.findOneAndUpdate({_id: req.params.gameId}, req.body, {new: true}, function(err, trains) {
-      if (err)
-        res.send(err);
-      res.json(trains);
+    Games.findById({_id: req.params.gameId}, function(err, trains) {
+        if (err) res.send(err);
+        function ValidRest(rest) {
+            return !(rest == req.params.restId);
+        }
+        trains.restaurants = trains.restaurants.filter(ValidRest);
+        trains.save();
+        res.json(trains);
     });
   };
