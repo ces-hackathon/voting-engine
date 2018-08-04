@@ -36,7 +36,7 @@ var GameSchema = new Schema({
   status: {
     type: [{
       type: String,
-      enum: ['pending', 'ongoing', 'completed']
+      enum: ['pending', 'inprogress', 'completed']
     }],
     default: ['pending']
   }
