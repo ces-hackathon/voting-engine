@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/ces-hackathon/voting-engine/issues"
   },
-  "homepage": "https://github.com/ces-hackathon/voting-engine#readme"
+  "homepage": "https://github.com/ces-hackathon/voting-engine#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
