@@ -76,8 +76,10 @@ exports.delete_a_vote = function(req, res) {
 exports.add_user_to_game = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
         if (err) res.send(err);
+        if (trains.status != 'completed') {
         trains.users = trains.users.push(req.params.userId);
         trains.save();
+        }
         res.json(trains);
       });
   };
@@ -85,11 +87,13 @@ exports.add_user_to_game = function(req, res) {
 exports.remove_user_from_game = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
         if (err) res.send(err);
+        if (trains.status != 'completed') {
         function ValidUser(user) {
             return !(user == req.params.userId);
         }
         trains.users = trains.users.filter(ValidUser);
         trains.save();
+        }
         res.json(trains);
     });
 };
@@ -98,8 +102,10 @@ exports.remove_user_from_game = function(req, res) {
 exports.add_rest_to_game = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
         if (err) res.send(err);
-        trains.restaurants = trains.restaurants.push(req.params.restId);
+        if (trains.status != 'completed') {
+            trains.restaurants = trains.restaurants.push(req.params.restId);
         trains.save();
+        }
         res.json(trains);
       });
   };
@@ -107,11 +113,13 @@ exports.add_rest_to_game = function(req, res) {
   exports.remove_rest_from_game = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
         if (err) res.send(err);
+        if (trains.status != 'completed') {
         function ValidRest(rest) {
             return !(rest == req.params.restId);
         }
         trains.restaurants = trains.restaurants.filter(ValidRest);
         trains.save();
+        }
         res.json(trains);
     });
   };
