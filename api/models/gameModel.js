@@ -29,7 +29,7 @@ var GameSchema = new Schema({
     type: Date,
     required: 'Desired lunch time must be entered'
   },
-  expiration_date: {
+  expiration_timer: {
     type: Date,
     default: moment().add(5, 'minutes').toDate()
   },
