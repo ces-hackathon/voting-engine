@@ -17,6 +17,6 @@ module.exports = function(app) {
     .delete(voter.remove_user_from_game); 
 
   app.route('/games/:gameId/:restId')
-    .post(voter.add_rest)
-    .delete(voter.remove_rest);
+    .post(voter.add_rest_to_game)
+    .delete(voter.remove_rest_from_game);
 };
