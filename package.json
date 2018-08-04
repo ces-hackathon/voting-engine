@@ -1,0 +1,19 @@
+{
+  "name": "voting-engine",
+  "version": "1.0.0",
+  "description": "voting engine for the lunch conductor",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ces-hackathon/voting-engine.git"
+  },
+  "author": "sam eaton and kevin dulay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ces-hackathon/voting-engine/issues"
+  },
+  "homepage": "https://github.com/ces-hackathon/voting-engine#readme"
+}
