@@ -7,13 +7,15 @@ var Schema = mongoose.Schema;
 var GameSchema = new Schema({
   name: {
     type: String,
-    required: 'Kindly enter the name of the task'
+    required: 'Kindly enter the name of the lunch train'
   },
-  Created_date: {
+  restaurants: {type: [String]},
+  users: {type: [String]},
+  created_date: {
     type: Date,
     default: moment().toDate()
   },
-  Expiration_date: {
+  expiration_date: {
     type: Date,
     default: moment().add(5, 'minutes').toDate()
   },
