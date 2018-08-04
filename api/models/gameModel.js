@@ -11,11 +11,11 @@ var GameSchema = new Schema({
   },
   Created_date: {
     type: Date,
-    default: moment()
+    default: moment().toDate()
   },
   Expiration_date: {
     type: Date,
-    default: moment().add(5, 'minutes')
+    default: moment().add(5, 'minutes').toDate()
   },
   status: {
     type: [{
