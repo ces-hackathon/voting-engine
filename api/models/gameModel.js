@@ -31,7 +31,7 @@ var GameSchema = new Schema({
   },
   expiration_timer: {
     type: Date,
-    default: moment().startOf('day').add(12, 'hours').subtract(15,'minutes').toDate()
+    default: moment().startOf('day').add(10, 'hours').subtract(15,'minutes').toDate()
   },
   status: {
     type: [{

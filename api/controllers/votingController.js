@@ -1,5 +1,5 @@
 'use strict';
-
+var moment = require('moment');
 var mongoose = require('mongoose'),
 Games = mongoose.model('Games');
 
@@ -53,8 +53,11 @@ exports.get_game_votes = function(req, res) {
 exports.cast_a_vote = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
       if (err) res.send(err);
+      if (trains.status == 'completed') res.json({message: 'Game cannot be modified once it has completed'});
       var vote = {restaurant: req.body.rest, user: req.body.user, voteUp: !!req.body.voteUp};
       trains.votes.push(vote);
+      var newExpiration = moment(trains.expiration_timer).add(5,'minutes').toDate();
+      trains.expiration_timer = newExpiration;
       trains.save();
       res.json(trains);
     });
@@ -63,6 +66,7 @@ exports.cast_a_vote = function(req, res) {
 exports.delete_a_vote = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
       if (err) res.send(err);
+      if (trains.status == 'completed') res.json({message: 'Game cannot be modified once it has completed'});
       function IsTheVote(vote) {
           return !((vote.user == req.body.user) && (vote.restaurant == req.body.restaurant) && (vote.voteUp == !!req.body.voteUp)); 
       }
@@ -76,10 +80,9 @@ exports.delete_a_vote = function(req, res) {
 exports.add_user_to_game = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
         if (err) res.send(err);
-        if (trains.status != 'completed') {
+        if (trains.status == 'completed') res.json({message: 'Game cannot be modified once it has completed'});
         trains.users = trains.users.push(req.params.userId);
         trains.save();
-        }
         res.json(trains);
       });
   };
@@ -87,13 +90,12 @@ exports.add_user_to_game = function(req, res) {
 exports.remove_user_from_game = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
         if (err) res.send(err);
-        if (trains.status != 'completed') {
+        if (trains.status == 'completed') res.json({message: 'Game cannot be modified once it has completed'});
         function ValidUser(user) {
             return !(user == req.params.userId);
         }
         trains.users = trains.users.filter(ValidUser);
         trains.save();
-        }
         res.json(trains);
     });
 };
@@ -102,10 +104,9 @@ exports.remove_user_from_game = function(req, res) {
 exports.add_rest_to_game = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
         if (err) res.send(err);
-        if (trains.status != 'completed') {
+        if (trains.status == 'completed') res.json({message: 'Game cannot be modified once it has completed'});
             trains.restaurants = trains.restaurants.push(req.params.restId);
         trains.save();
-        }
         res.json(trains);
       });
   };
@@ -113,13 +114,12 @@ exports.add_rest_to_game = function(req, res) {
   exports.remove_rest_from_game = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
         if (err) res.send(err);
-        if (trains.status != 'completed') {
+        if (trains.status == 'completed') res.json({message: 'Game cannot be modified once it has completed'});
         function ValidRest(rest) {
             return !(rest == req.params.restId);
         }
         trains.restaurants = trains.restaurants.filter(ValidRest);
         trains.save();
-        }
         res.json(trains);
     });
   };
