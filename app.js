@@ -12,13 +12,15 @@ mongoose.connect('mongodb://localhost/Gamedb');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(function(req, res) {
-    res.status(404).send({url: req.originalUrl + ' not found'})
-  });
 
 
 var routes = require('./api/routes/votingRoutes'); //importing route
 routes(app); //register the route
+
+app.use(function(req, res) { //handle all other url requests
+    res.status(404).send({url: req.originalUrl + ' not found'})
+  });
+
 
 
 app.listen(port);
