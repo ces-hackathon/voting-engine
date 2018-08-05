@@ -30,6 +30,19 @@ exports.get_game = function(req, res) {
   });
 };
 
+exports.patch_game = function(req, res) {
+    Games.findById(req.params.gameId, function(err, train) {
+        if (err)
+            res.send(err);
+        train.status = req.body.status;
+        train.save(function(err, train){
+            if (err)
+                res.send(err);
+            res.json(train);
+        });
+    });
+};
+
 exports.delete_a_game = function(req, res) {
   Games.remove({
     _id: req.params.gameId
@@ -101,6 +114,17 @@ exports.remove_user_from_game = function(req, res) {
 };
 
   //methods for /games/:gameId/:restId route
+exports.list_all_rest = function(req, res) {
+    Games.findById({_id: req.params.gameID}, function(err, trains) {
+        if (err)
+            res.send(err);
+        console.log(trains);
+            res.json(trains.restaurants);
+        }
+
+    )
+}
+
 exports.add_rest_to_game = function(req, res) {
     Games.findById({_id: req.params.gameId}, function(err, trains) {
         if (err) res.send(err);
