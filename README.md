@@ -44,3 +44,14 @@ MONGO_PORT=27017
 ```{.sh}
 ./run-container.sh
 ```
+
+### Refresh Containers (stop, remove, build, run, tail logs)
+Mongo Container
+```{.sh}
+./refresh-mongo-container.sh
+```
+
+Voting Engine Container
+```{.sh}
+./refresh-votingengine-container.sh
+```
