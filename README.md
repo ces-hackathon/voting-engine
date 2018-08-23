@@ -13,6 +13,12 @@ Manages voting API and voting data for Lunch Conductor game.
 docker network create lunch-net
 ```
 
+### Create Volume for Mongo Data
+
+```{.sh}
+docker volume create mongodata
+```
+
 ### Run Mongo
 
 ```{.sh}
