@@ -1,31 +1,36 @@
 'use strict';
-module.exports = function(app) {
-  var voter = require('../controllers/votingController');
+module.exports = function (app) {
+    var voter = require('../controllers/votingController');
 
-  // Voting Routes
-  app.route('/games')
-    .get(voter.list_all_games)
-    .post(voter.create_a_game);
+    // Voting Routes
+    app.route('/games')
+        .get(voter.list_all_games)
+        .post(voter.create_a_game);
 
     app.route('/games/:gameId')
-    .get(voter.get_game)
-    .delete(voter.delete_a_game)
+        .get(voter.get_game)
+        .delete(voter.delete_a_game)
         .patch(voter.patch_game);
 
 
-  app.route('/games/:gameId/votes')
-    .get(voter.get_game_votes)
-    .post(voter.cast_a_vote)
-    .delete(voter.delete_a_vote);
+    app.route('/games/:gameId/votes')
+        .get(voter.get_game_votes)
+        .post(voter.cast_a_vote)
+        .delete(voter.delete_a_vote);
 
-  app.route('/games/:gameId/:userId')
-    .post(voter.add_user_to_game)
-    .delete(voter.remove_user_from_game);
+    app.route('/games/:gameId/users')
+        .get(voter.list_all_users)
+        .post(voter.add_user_to_game);
+
+
+    app.route('/games/:gameId/users/:userId')
+        .post(voter.add_user_to_game)
+        .delete(voter.remove_user_from_game);
 
     app.route('/games/:gameId/rest')
-        .get(voter.list_all_rest);
+        .get(voter.list_all_rest)
+        .post(voter.add_rest_to_game);
 
-  app.route('/games/:gameId/:restId')
-      .post(voter.add_rest_to_game)
-    .delete(voter.remove_rest_from_game);
+    app.route('/games/:gameId/rest/:restId')
+        .delete(voter.remove_rest_from_game);
 };
